@@ -4,12 +4,17 @@ frontend:
     preBuild:
       commands:
         - echo "Instalando dependências do React..."
-        - cd reservas-mesas  # Acessa a pasta onde está o seu projeto React
-        - npm install         # Instala as dependências
+        - cd reservas-mesas              # Vai para a pasta onde está o seu projeto React
+        - npm install                     # Instala as dependências do React
     build:
       commands:
         - echo "Construindo o projeto React..."
-        - cd reservas-mesas  # Acessa novamente a pasta do projeto React
-        - npm run build       # Cria a versão otimizada de produção da aplicação React
+        - cd reservas-mesas              # Vai para a pasta do projeto React novamente
+        - npm run build                   # Cria a versão otimizada de produção
   artifacts:
-    baseDirectory: reservas-mesas/build  # Diretório ger
+    baseDirectory: reservas-mesas/build   # Diretório de saída do build do React
+    files:
+      - '**/*'                           # Inclui todos os arquivos no diretório de build
+  cache:
+    paths:
+      - node_modules/**/*                 # Para cachear a pasta node_modules e acelerar builds futuros
