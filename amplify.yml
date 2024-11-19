@@ -1,0 +1,15 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Instalando dependências do React..."
+        - cd reservas-mesas  # Acessa a pasta onde está o seu projeto React
+        - npm install         # Instala as dependências
+    build:
+      commands:
+        - echo "Construindo o projeto React..."
+        - cd reservas-mesas  # Acessa novamente a pasta do projeto React
+        - npm run build       # Cria a versão otimizada de produção da aplicação React
+  artifacts:
+    baseDirectory: reservas-mesas/build  # Diretório ger
