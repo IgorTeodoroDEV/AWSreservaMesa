@@ -1,15 +1,20 @@
 version: 1
 frontend:
   phases:
-    #preBuild:
-     # commands:
-     #   - echo "Instalando dependências do React..."
-      #  - cd reservas-mesas  # Acessa a pasta onde está o seu projeto React
-       # - npm install         # Instala as dependências
-   # build:
-     # commands:
-       # - echo "Construindo o projeto React..."
-       # - cd reservas-mesas  # Acessa novamente a pasta do projeto React
-        # - npm run build       # Cria a versão otimizada de produção da aplicação React
+    preBuild:
+      commands:
+        - echo "Instalando dependências do React..."
+        - cd reservas-mesas               # Muda para a pasta onde está o projeto React
+        - npm install                      # Instala as dependências
+    build:
+      commands:
+        - echo "Construindo o projeto React..."
+        - cd reservas-mesas               # Muda novamente para a pasta do projeto React
+        - npm run build                    # Executa o comando de build do React
   artifacts:
-    baseDirectory: reservas-mesas/build  # Diretório ger
+    baseDirectory: reservas-mesas/build  # Define o diretório onde os arquivos de build são gerados
+    files:
+      - '**/*'                            # Inclui todos os arquivos dentro da pasta build
+  cache:
+    paths:
+      - node_modules/**/*                  # Cacheia a pasta node_modules para builds futuros mais rápidos
