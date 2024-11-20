@@ -1,4 +1,3 @@
-// src/components/ConsultarComanda.js
 import React, { useState } from 'react';
 import api from '../api';  // Assumindo que o api está configurado para interagir com o backend
 
@@ -21,7 +20,6 @@ const ConsultarComanda = () => {
                 setMessage('Nenhum item encontrado para esta comanda.');
             }
         } catch (error) {
-            // Em caso de erro, informamos ao usuário
             setMessage('Erro ao consultar itens da comanda.');
         }
     };
