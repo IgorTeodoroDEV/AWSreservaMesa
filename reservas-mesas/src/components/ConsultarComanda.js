@@ -9,7 +9,7 @@ const ConsultarComanda = () => {
 
     const handleConsultarItens = async () => {
         try {
-            const response = await api.post('/consultarComanda', {
+            const response = await api.get('/consultarComanda', {
                 action: 'consultarComanda',
                 comandaID: comandaID,
             });
