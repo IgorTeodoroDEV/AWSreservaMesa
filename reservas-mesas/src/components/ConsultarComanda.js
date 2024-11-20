@@ -8,7 +8,7 @@ const ConsultarComanda = () => {
 
     const handleConsultarItens = async () => {
         try {
-            // Usando GET ao invés de POST
+            // Usando GET para consultar os itens da comanda
             const response = await api.get(`/consultarComanda/${comandaID}`);
 
             // Verificando se a resposta contém itens
