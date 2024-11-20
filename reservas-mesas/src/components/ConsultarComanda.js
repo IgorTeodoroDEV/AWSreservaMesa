@@ -1,6 +1,6 @@
 // src/components/ConsultarComanda.js
 import React, { useState } from 'react';
-import api from '../api';
+import api from '../api';  // Assumindo que o api está configurado para interagir com o backend
 
 const ConsultarComanda = () => {
     const [comandaID, setComandaID] = useState('');
@@ -9,11 +9,10 @@ const ConsultarComanda = () => {
 
     const handleConsultarItens = async () => {
         try {
-            const response = await api.get('/consultarComanda', {
-                action: 'consultarComanda',
-                comandaID: comandaID,
-            });
+            // Usando GET ao invés de POST
+            const response = await api.get(`/consultarComanda/${comandaID}`);
 
+            // Verificando se a resposta contém itens
             if (response.data.body && response.data.body.itens) {
                 setItens(response.data.body.itens);
                 setMessage('Itens carregados com sucesso.');
@@ -22,6 +21,7 @@ const ConsultarComanda = () => {
                 setMessage('Nenhum item encontrado para esta comanda.');
             }
         } catch (error) {
+            // Em caso de erro, informamos ao usuário
             setMessage('Erro ao consultar itens da comanda.');
         }
     };
