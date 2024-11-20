@@ -1,52 +1,54 @@
-// src/components/Comanda.js
+// src/components/ConsultarComanda.js
 import React, { useState } from 'react';
-import api from '../api';
+import api from '../api'; // Certifique-se de que o api está configurado corretamente
 
-const Comanda = () => {
+const ConsultarComanda = () => {
     const [comandaID, setComandaID] = useState('');
-    const [produto, setProduto] = useState('');
-    const [quantidade, setQuantidade] = useState('');
+    const [itens, setItens] = useState([]);
     const [message, setMessage] = useState('');
 
-    const handleAdicionarItem = async () => {
+    const handleConsultarItens = async () => {
         try {
-            const response = await api.post('/adicionarItem', {
-                action: 'adicionarItem',
+            const response = await api.post('/consultarComanda', {
+                action: 'consultarComanda',
                 comandaID: comandaID,
-                produto: produto,
-                quantidade: quantidade,
             });
-            setMessage(response.data.body);
+
+            // Verificando se a resposta contém itens
+            if (response.data.body && response.data.body.itens) {
+                setItens(response.data.body.itens);
+                setMessage('Itens carregados com sucesso.');
+            } else {
+                setItens([]);
+                setMessage('Nenhum item encontrado para esta comanda.');
+            }
         } catch (error) {
-            setMessage('Erro ao adicionar item.');
+            setMessage('Erro ao consultar itens da comanda.');
         }
     };
 
     return (
         <div>
-            <h2>Adicionar Item à Comanda</h2>
+            <h2>Consultar Itens da Comanda</h2>
             <input
                 type="text"
                 placeholder="ID da Comanda"
                 value={comandaID}
                 onChange={(e) => setComandaID(e.target.value)}
             />
-            <input
-                type="text"
-                placeholder="Produto"
-                value={produto}
-                onChange={(e) => setProduto(e.target.value)}
-            />
-            <input
-                type="number"
-                placeholder="Quantidade"
-                value={quantidade}
-                onChange={(e) => setQuantidade(e.target.value)}
-            />
-            <button onClick={handleAdicionarItem}>Adicionar Item</button>
+            <button onClick={handleConsultarItens}>Consultar Itens</button>
             <p>{message}</p>
+            {itens.length > 0 && (
+                <ul>
+                    {itens.map((item, index) => (
+                        <li key={index}>
+                            {item.produto} - Quantidade: {item.quantidade}
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 };
 
-export default Comanda;
+export default ConsultarComanda;
