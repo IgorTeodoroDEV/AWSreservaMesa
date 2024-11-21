@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';  // Certifique-se de que axios está instalado no seu projeto
+import axios from 'axios';
+
+// Certifique-se de que axios está instalado no seu projeto
 
 const ConsultarComanda = () => {
     const [comandaID, setComandaID] = useState('');
@@ -9,7 +11,7 @@ const ConsultarComanda = () => {
     const handleConsultarItens = async () => {
         try {
             // Substitua o link abaixo pela URL do seu API Gateway
-            const apiUrl = `https://<API_GATEWAY_URL>/consultarComanda/${comandaID}`;
+            const apiUrl = `https://x9giuzuyq5.execute-api.us-east-1.amazonaws.com/prod/consultarComanda/${comandaID}`;
 
             // Fazendo a requisição GET para o seu API Gateway
             const response = await axios.get(apiUrl);
