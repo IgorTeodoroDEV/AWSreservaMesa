@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from '../api';  // Assumindo que o api está configurado para interagir com o backend
+import axios from 'axios';  // Certifique-se de que axios está instalado no seu projeto
 
 const ConsultarComanda = () => {
     const [comandaID, setComandaID] = useState('');
@@ -8,19 +8,24 @@ const ConsultarComanda = () => {
 
     const handleConsultarItens = async () => {
         try {
-            // Usando GET para consultar os itens da comanda
-            const response = await api.get(`/consultarComanda/${comandaID}`);
+            // Substitua o link abaixo pela URL do seu API Gateway
+            const apiUrl = `https://<API_GATEWAY_URL>/consultarComanda/${comandaID}`;
 
-            // Verificando se a resposta contém itens
-            if (response.data.body && response.data.body.itens) {
-                setItens(response.data.body.itens);
+            // Fazendo a requisição GET para o seu API Gateway
+            const response = await axios.get(apiUrl);
+
+            // Verificando se a resposta contém os itens
+            if (response.data && response.data.itens) {
+                setItens(response.data.itens);  // Atualiza os itens na tela
                 setMessage('Itens carregados com sucesso.');
             } else {
-                setItens([]);
+                setItens([]);  // Nenhum item encontrado
                 setMessage('Nenhum item encontrado para esta comanda.');
             }
         } catch (error) {
-            setMessage('Erro ao consultar itens da comanda.');
+            // Em caso de erro
+            console.error('Erro na consulta:', error);
+            setMessage('Erro ao consultar itens da comanda. Verifique o ID informado.');
         }
     };
 
@@ -31,7 +36,7 @@ const ConsultarComanda = () => {
                 type="text"
                 placeholder="ID da Comanda"
                 value={comandaID}
-                onChange={(e) => setComandaID(e.target.value)}
+                onChange={(e) => setComandaID(e.target.value)}  // Atualiza o comandaID conforme digitação
             />
             <button onClick={handleConsultarItens}>Consultar Itens</button>
             <p>{message}</p>
