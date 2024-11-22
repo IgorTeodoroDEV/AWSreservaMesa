@@ -12,14 +12,21 @@ const ConsultarComanda = () => {
             const response = await api.get(`/consultarComanda/${comandaID}`);
 
             // Verificando se a resposta contém itens
-            if (response.data.body && response.data.body.itens) {
-                setItens(response.data.body.itens);
-                setMessage('Itens carregados com sucesso.');
+            if (response.data.body) {
+                const responseBody = JSON.parse(response.data.body);  // Parse a string JSON retornada
+                if (responseBody.itens && responseBody.itens.length > 0) {
+                    setItens(responseBody.itens);
+                    setMessage('Itens carregados com sucesso.');
+                } else {
+                    setItens([]);
+                    setMessage('Nenhum item encontrado para esta comanda.');
+                }
             } else {
                 setItens([]);
                 setMessage('Nenhum item encontrado para esta comanda.');
             }
         } catch (error) {
+            setItens([]);
             setMessage('Erro ao consultar itens da comanda.');
         }
     };
