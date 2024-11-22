@@ -7,6 +7,7 @@ const ConsultarComanda = () => {
     const [message, setMessage] = useState('');
 
     const handleConsultarItens = async () => {
+        console.log(`Consultando comanda com ID: ${comandaID}`);
         try {
             // Usando GET para consultar os itens da comanda
             const response = await api.get(`/consultarComanda/${comandaID}`);
@@ -38,13 +39,13 @@ const ConsultarComanda = () => {
         <div>
             <h2>Consultar Itens da Comanda</h2>
             <input
-                type="text"
+                type="numeric"
                 placeholder="ID da Comanda"
                 value={comandaID}
                 onChange={(e) => setComandaID(e.target.value)}
             />
             <button onClick={handleConsultarItens}>Consultar Itens</button>
-            <p>{message}</p>
+            <p>{message} </p>
             {itens.length > 0 && (
                 <ul>
                     {itens.map((item, index) => (
