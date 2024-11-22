@@ -11,7 +11,7 @@ const ConsultarComanda = () => {
     const handleConsultarItens = async () => {
         try {
             // Substitua o link abaixo pela URL do seu API Gateway
-            const apiUrl = `https://x9giuzuyq5.execute-api.us-east-1.amazonaws.com/prod/consultarComanda?${comandaID}`;
+            const apiUrl = `https://x9giuzuyq5.execute-api.us-east-1.amazonaws.com/prod/consultarComanda?comandaID=${comandaID}&action=consultarComanda`;
 
             // Fazendo a requisição GET para o seu API Gateway
             const response = await axios.get(apiUrl);
