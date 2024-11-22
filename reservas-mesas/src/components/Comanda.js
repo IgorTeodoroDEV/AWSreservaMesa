@@ -1,52 +1,75 @@
-// src/components/Comanda.js
 import React, { useState } from 'react';
 import api from '../api';
 
-const Comanda = () => {
+const ConsultarComanda = () => {
     const [comandaID, setComandaID] = useState('');
-    const [produto, setProduto] = useState('');
-    const [quantidade, setQuantidade] = useState('');
+    const [itens, setItens] = useState([]);
     const [message, setMessage] = useState('');
 
-    const handleAdicionarItem = async () => {
+    const handleConsultarItens = async () => {
+        if (!comandaID) {
+            setMessage('Por favor, insira um ID de comanda válido.');
+            return;
+        }
+
         try {
-            const response = await api.post('/adicionarItem', {
-                action: 'adicionarItem',
-                comandaID: comandaID,
-                produto: produto,
-                quantidade: quantidade,
-            });
-            setMessage(response.data.body);
+            console.log(`Consultando comanda com ID: ${comandaID}`);
+            const response = await api.get(`/consultarComanda/${comandaID}`);
+            console.log("Resposta completa da API:", response);
+
+            if (response.data.body) {
+                const responseBody = JSON.parse(response.data.body); // Parse JSON
+                console.log("Resposta processada:", responseBody);
+
+                if (responseBody.comandaID && responseBody.itens) {
+                    setItens(responseBody.itens);
+                    setMessage(`Comanda ID: ${responseBody.comandaID} - Itens carregados com sucesso.`);
+                } else {
+                    setItens([]);
+                    setMessage('Nenhum item encontrado para esta comanda.');
+                }
+            } else {
+                setItens([]);
+                setMessage('Erro ao recuperar a comanda.');
+            }
         } catch (error) {
-            setMessage('Erro ao adicionar item.');
+            console.error("Erro durante a requisição:", error);
+
+            if (error.response) {
+                console.error("Erro do servidor:", error.response.data);
+            } else if (error.request) {
+                console.error("A requisição foi enviada, mas não houve resposta:", error.request);
+            } else {
+                console.error("Erro ao configurar a requisição:", error.message);
+            }
+
+            setMessage('Erro ao consultar itens da comanda.');
+            setItens([]);
         }
     };
 
     return (
         <div>
-            <h2>Adicionar Item à Comanda</h2>
+            <h2>Consultar Itens da Comanda</h2>
             <input
                 type="text"
                 placeholder="ID da Comanda"
                 value={comandaID}
                 onChange={(e) => setComandaID(e.target.value)}
             />
-            <input
-                type="text"
-                placeholder="Produto"
-                value={produto}
-                onChange={(e) => setProduto(e.target.value)}
-            />
-            <input
-                type="number"
-                placeholder="Quantidade"
-                value={quantidade}
-                onChange={(e) => setQuantidade(e.target.value)}
-            />
-            <button onClick={handleAdicionarItem}>Adicionar Item</button>
+            <button onClick={handleConsultarItens}>Consultar Itens</button>
             <p>{message}</p>
+            {itens.length > 0 && (
+                <ul>
+                    {itens.map((item, index) => (
+                        <li key={index}>
+                            Produto: {item.produto} - Quantidade: {item.quantidade}
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 };
 
-export default Comanda;
+export default ConsultarComanda;
