@@ -11,19 +11,21 @@ const ConsultarComanda = () => {
             // Usando GET para consultar os itens da comanda
             const response = await api.get(`/consultarComanda/${comandaID}`);
 
-            // Verificando se a resposta contém itens
+            // Verificando se a resposta contém o corpo
             if (response.data.body) {
                 const responseBody = JSON.parse(response.data.body);  // Parse a string JSON retornada
-                if (responseBody.itens && responseBody.itens.length > 0) {
+
+                // Acessando comandaID, produto e quantidade
+                if (responseBody.comandaID && responseBody.itens) {
                     setItens(responseBody.itens);
-                    setMessage('Itens carregados com sucesso.');
+                    setMessage(`Comanda ID: ${responseBody.comandaID} - Itens carregados com sucesso.`);
                 } else {
                     setItens([]);
                     setMessage('Nenhum item encontrado para esta comanda.');
                 }
             } else {
                 setItens([]);
-                setMessage('Nenhum item encontrado para esta comanda.');
+                setMessage('Erro ao recuperar a comanda.');
             }
         } catch (error) {
             setItens([]);
@@ -46,7 +48,7 @@ const ConsultarComanda = () => {
                 <ul>
                     {itens.map((item, index) => (
                         <li key={index}>
-                            {item.produto} - Quantidade: {item.quantidade}
+                            Produto: {item.produto} - Quantidade: {item.quantidade}
                         </li>
                     ))}
                 </ul>
