@@ -28,6 +28,7 @@ const ConsultarComanda = () => {
                 setMessage('Erro ao recuperar a comanda.');
             }
         } catch (error) {
+            console.error("Erro durante a requisição:", error); 
             setItens([]);
             setMessage('Erro ao consultar itens da comanda.');
         }
