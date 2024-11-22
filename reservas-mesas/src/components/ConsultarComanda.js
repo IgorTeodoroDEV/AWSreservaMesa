@@ -1,77 +1,83 @@
 import React, { useState } from 'react';
-import api from '../api';
+import axios from 'axios';
 
 const ConsultarComanda = () => {
-    const [comandaID, setComandaID] = useState('');
-    const [itens, setItens] = useState([]);
-    const [message, setMessage] = useState('');
+  const [comandaID, setComandaID] = useState('');
+  const [itens, setItens] = useState([]);
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-    const handleConsultarItens = async () => {
-        if (!comandaID) {
-            setMessage('Por favor, insira um ID de comanda válido.');
-            return;
+  // Função que faz a requisição para a API e processa a resposta
+  const handleConsultarItens = async () => {
+    // Verificando se o comandaID foi informado
+    if (!comandaID) {
+      setMessage('Por favor, insira o ID da comanda.');
+      return;
+    }
+
+    setLoading(true); // Ativar o carregamento
+    setMessage('');
+
+    try {
+      // Fazendo a requisição GET para a API
+      const response = await axios.get(`https://x9giuzuyq5.execute-api.us-east-1.amazonaws.com/prod/consultarComanda/${comandaID}`);
+
+      // Verificando se a resposta contém o corpo com os dados da comanda
+      if (response.data && response.data.body) {
+        const responseBody = JSON.parse(response.data.body);  // Parsing da string JSON
+        console.log(responseBody);  // Para depuração no console
+
+        // Verificando se existem itens
+        if (responseBody.itens && responseBody.itens.length > 0) {
+          setItens(responseBody.itens);
+          setMessage('Itens carregados com sucesso.');
+        } else {
+          setItens([]);
+          setMessage('Nenhum item encontrado para esta comanda.');
         }
+      } else {
+        setItens([]);
+        setMessage('Erro ao recuperar a comanda.');
+      }
+    } catch (error) {
+      console.error('Erro na requisição:', error);
+      setItens([]);
+      setMessage('Erro ao consultar itens da comanda.');
+    } finally {
+      setLoading(false); // Desativa o carregamento
+    }
+  };
 
-        try {
-            console.log(`Consultando comanda com ID: ${comandaID}`);
-            const response = await api.get(`/consultarComanda/23`);
-            console.log("Resposta completa da API:", response);
+  return (
+    <div>
+      <h2>Consultar Itens da Comanda</h2>
 
-            // Verifica se há um body na resposta
-            if (response.data.body) {
-                const responseBody = JSON.parse(response.data.body); // Parse JSON
-                console.log("Resposta processada:", responseBody);
+      {/* Campo para inserir o ID da comanda */}
+      <input
+        type="text"
+        placeholder="ID da Comanda"
+        value={comandaID}
+        onChange={(e) => setComandaID(e.target.value)}
+      />
+      <button onClick={handleConsultarItens} disabled={loading}>
+        {loading ? 'Carregando...' : 'Consultar Itens'}
+      </button>
 
-                // Valida se há comandaID e itens no corpo da resposta
-                if (responseBody.comandaID && responseBody.itens) {
-                    setItens(responseBody.itens);
-                    setMessage(`Comanda ID: ${responseBody.comandaID} - Itens carregados com sucesso.`);
-                } else {
-                    setItens([]);
-                    setMessage('Nenhum item encontrado para esta comanda.');
-                }
-            } else {
-                setItens([]);
-                setMessage('Erro ao recuperar a comanda.');
-            }
-        } catch (error) {
-            console.error("Erro durante a requisição:", error);
+      {/* Mensagem de status */}
+      <p>{message}</p>
 
-            if (error.response) {
-                console.error("Erro do servidor:", error.response.data);
-            } else if (error.request) {
-                console.error("A requisição foi enviada, mas não houve resposta:", error.request);
-            } else {
-                console.error("Erro ao configurar a requisição:", error.message);
-            }
-
-            setMessage('Erro ao consultar itens da comanda.');
-            setItens([]);
-        }
-    };
-
-    return (
-        <div>
-            <h2>Consultar Itens da Comanda</h2>
-            <input
-                type="text"
-                placeholder="ID da Comanda"
-                value={comandaID}
-                onChange={(e) => setComandaID(e.target.value)}
-            />
-            <button onClick={handleConsultarItens}>Consultar Itens</button>
-            <p>{message}</p>
-            {itens.length > 0 && (
-                <ul>
-                    {itens.map((item, index) => (
-                        <li key={index}>
-                            Produto: {item.produto} - Quantidade: {item.quantidade}
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
-    );
+      {/* Exibindo a lista de itens */}
+      {itens.length > 0 && (
+        <ul>
+          {itens.map((item, index) => (
+            <li key={index}>
+              Produto: {item.produto} - Quantidade: {item.quantidade}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 };
 
 export default ConsultarComanda;
