@@ -14,7 +14,7 @@ const ConsultarComanda = () => {
 
         try {
             console.log(`Consultando comanda com ID: ${comandaID}`);
-            const response = await api.get(`/consultarComanda/${comandaID}`);
+            const response = await api.get(`/consultarComanda/23`);
             console.log("Resposta completa da API:", response);
 
             // Verifica se há um body na resposta
