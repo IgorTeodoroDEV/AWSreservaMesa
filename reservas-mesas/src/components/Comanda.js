@@ -16,7 +16,6 @@ const Comanda = () => {
                 produto: produto,
                 quantidade: quantidade,
             });
-            c
             setMessage(response.data.body);
         } catch (error) {
             setMessage('Erro ao adicionar item.');

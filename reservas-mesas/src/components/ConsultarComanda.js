@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-
-// Certifique-se de que axios está instalado no seu projeto
+import api from '../api';  // Assumindo que o api está configurado para interagir com o backend
 
 const ConsultarComanda = () => {
     const [comandaID, setComandaID] = useState('');
@@ -10,24 +8,19 @@ const ConsultarComanda = () => {
 
     const handleConsultarItens = async () => {
         try {
-            // Substitua o link abaixo pela URL do seu API Gateway
-            const apiUrl = `https://x9giuzuyq5.execute-api.us-east-1.amazonaws.com/prod/consultarComanda?comandaID=${comandaID}&action=consultarComanda`;
+            // Usando GET para consultar os itens da comanda
+            const response = await api.get(`/consultarComanda/${comandaID}`);
 
-            // Fazendo a requisição GET para o seu API Gateway
-            const response = await axios.get(apiUrl);
-
-            // Verificando se a resposta contém os itens
-            if (response.data && response.data.itens) {
-                setItens(response.data.itens);  // Atualiza os itens na tela
+            // Verificando se a resposta contém itens
+            if (response.data.body && response.data.body.itens) {
+                setItens(response.data.body.itens);
                 setMessage('Itens carregados com sucesso.');
             } else {
-                setItens([]);  // Nenhum item encontrado
+                setItens([]);
                 setMessage('Nenhum item encontrado para esta comanda.');
             }
         } catch (error) {
-            // Em caso de erro
-            console.error('Erro na consulta:', error);
-            setMessage('Erro ao consultar itens da comanda. Verifique o ID informado.');
+            setMessage('Erro ao consultar itens da comanda.');
         }
     };
 
@@ -38,7 +31,7 @@ const ConsultarComanda = () => {
                 type="text"
                 placeholder="ID da Comanda"
                 value={comandaID}
-                onChange={(e) => setComandaID(e.target.value)}  // Atualiza o comandaID conforme digitação
+                onChange={(e) => setComandaID(e.target.value)}
             />
             <button onClick={handleConsultarItens}>Consultar Itens</button>
             <p>{message}</p>
