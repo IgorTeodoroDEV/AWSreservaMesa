@@ -13,7 +13,6 @@ const MesaReserva = () => {
                 mesaID: mesaID,
             });
             setMessage(response.data.body);
-            console.error(response);
         } catch (error) {
             setMessage('Erro ao reservar mesa.');
         }
