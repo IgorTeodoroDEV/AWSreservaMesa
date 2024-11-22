@@ -14,7 +14,7 @@ const ConsultarComanda = () => {
             // Verificando se a resposta contém o corpo
             if (response.data.body) {
                 const responseBody = JSON.parse(response.data.body);  // Parse a string JSON retornada
-                console.log(responseBody);
+                console.log(responseBody, 'opa');
                 // Acessando comandaID, produto e quantidade
                 if (responseBody.comandaID && responseBody.itens) {
                     setItens(responseBody.itens);
