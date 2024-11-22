@@ -17,10 +17,12 @@ const ConsultarComanda = () => {
             const response = await api.get(`/consultarComanda/${comandaID}`);
             console.log("Resposta completa da API:", response);
 
+            // Verifica se há um body na resposta
             if (response.data.body) {
                 const responseBody = JSON.parse(response.data.body); // Parse JSON
                 console.log("Resposta processada:", responseBody);
 
+                // Valida se há comandaID e itens no corpo da resposta
                 if (responseBody.comandaID && responseBody.itens) {
                     setItens(responseBody.itens);
                     setMessage(`Comanda ID: ${responseBody.comandaID} - Itens carregados com sucesso.`);
