@@ -20,7 +20,7 @@ const ConsultarComanda = () => {
 
     return (
         <div>
-            <h2>Adicionar Item à Comanda</h2>
+            <h2>Consultar Itens na comanda</h2>
             <input
                 type="text"
                 placeholder="ID da Comanda"
