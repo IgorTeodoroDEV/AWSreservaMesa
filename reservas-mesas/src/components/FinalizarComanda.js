@@ -12,7 +12,7 @@ const FinalizarComanda = () => {
                 action: 'finalizarComanda',
                 comandaID: comandaID,
             });
-            setMessage(response.data.body.message);
+            setMessage(response.data.body);
         } catch (error) {
             setMessage('Erro ao finalizar comanda.');
         }
