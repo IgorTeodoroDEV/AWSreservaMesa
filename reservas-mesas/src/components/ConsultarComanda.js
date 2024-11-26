@@ -33,4 +33,4 @@ const Comanda = () => {
     );
 };
 
-export default Comanda;
+export default ConsultaComanda;
