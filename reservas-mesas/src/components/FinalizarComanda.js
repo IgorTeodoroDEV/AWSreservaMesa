@@ -4,7 +4,6 @@ import api from '../api';
 
 const FinalizarComanda = () => {
     const [comandaID, setComandaID] = useState('');
-    const [total, setTotal] = useState(null);
     const [message, setMessage] = useState('');
 
     const handleFinalizarComanda = async () => {
