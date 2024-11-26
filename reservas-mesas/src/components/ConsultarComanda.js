@@ -9,7 +9,7 @@ const Comanda = () => {
     const handleConsultarComanda = async () => {
         try {
             const response = await api.post('/consultarComanda', {
-                action: 'consultar_itens_comanda',
+                action: 'consultarItensComanda',
                 comandaID: comandaID,
             });
             setMessage(response.data.body);
