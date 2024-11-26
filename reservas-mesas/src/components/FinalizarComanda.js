@@ -31,7 +31,6 @@ const FinalizarComanda = () => {
             />
             <button onClick={handleFinalizarComanda}>Finalizar</button>
             {message && <p>{message}</p>}
-            {total !== null && <p>Total: R${total}</p>}
         </div>
     );
 };
