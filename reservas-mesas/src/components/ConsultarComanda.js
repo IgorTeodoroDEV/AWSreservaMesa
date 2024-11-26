@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import api from '../api';
 
-const ConsultaComanda = () => {
+const Comanda = () => {
     const [comandaID, setComandaID] = useState('');
     const [message, setMessage] = useState('');
 
@@ -33,4 +33,4 @@ const ConsultaComanda = () => {
     );
 };
 
-export default ConsultaComanda;
+export default Comanda;

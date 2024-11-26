@@ -29,7 +29,7 @@ const FinalizarComanda = () => {
                 onChange={(e) => setComandaID(e.target.value)}
             />
             <button onClick={handleFinalizarComanda}>Finalizar</button>
-             <p>{message}</p>
+            <p>{message}</p>
         </div>
     );
 };
