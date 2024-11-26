@@ -9,7 +9,7 @@ const ConsultaReserva = () => {
     const handleConsultaReserva = async () => {
         try {
             const response = await api.post('/ConsultaReserva', {
-                action: 'consultarReserva',
+                action: 'consultarReserva'
             });
             setMessage(response.data.body);
         } catch (error) {
