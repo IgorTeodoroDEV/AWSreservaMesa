@@ -10,7 +10,7 @@ const Comanda = () => {
         try {
             const response = await api.post('/consultarComanda', {
                 action: 'consultar_itens_comanda',
-                comandaID: '23',
+                comandaID: comandaID,
             });
             setMessage(response.data.body);
         } catch (error) {
