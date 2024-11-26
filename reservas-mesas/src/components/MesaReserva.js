@@ -28,7 +28,7 @@ const MesaReserva = () => {
                 onChange={(e) => setMesaID(e.target.value)}
             />
             <button onClick={handleReserva}>Reservar</button>
-            <p>{message}Teste</p>
+            <p>{message}</p>
         </div>
     );
 };
