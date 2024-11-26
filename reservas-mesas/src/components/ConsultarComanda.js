@@ -10,11 +10,11 @@ const Comanda = () => {
         try {
             const response = await api.post('/consultarComanda', {
                 action: 'consultar_itens_comanda',
-                comandaID: comandaID,
+                comandaID: '23',
             });
             setMessage(response.data.body);
         } catch (error) {
-            setMessage('Erro ao adicionar item.');
+            setMessage('Erro ao consultar comanda.');
         }
     };
 
