@@ -9,7 +9,7 @@ const Comanda = () => {
     const handleConsultarComanda = async () => {
         try {
             const response = await api.post('/consultarComanda', {
-                action: 'adicionarItem',
+                action: 'consultar_itens_comanda',
                 comandaID: comandaID,
             });
             setMessage(response.data.body);
@@ -27,7 +27,7 @@ const Comanda = () => {
                 value={comandaID}
                 onChange={(e) => setComandaID(e.target.value)}
             />
-            <button onClick={handleConsultarComanda}>Consultar Comanda</button>
+            <button onClick={handleConsultarComanda}>consultarComanda</button>
             <p>{message}</p>
         </div>
     );
