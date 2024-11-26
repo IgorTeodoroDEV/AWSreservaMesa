@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import api from '../api';
 
-const Comanda = () => {
+const ConsultarComanda = () => {
     const [comandaID, setComandaID] = useState('');
     const [message, setMessage] = useState('');
 
