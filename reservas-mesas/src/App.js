@@ -5,6 +5,7 @@ import Comanda from './components/Comanda';
 import FinalizarComanda from './components/FinalizarComanda';
 import ConsultarComanda from './components/ConsultarComanda'; // Importe o novo componente
 import ConsultaReserva from './components/ConsultaReserva';
+import LiberarMesa from './components/LiberarMesa';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
       <ConsultaReserva />
       <Comanda />
       <FinalizarComanda />
-      <ConsultarComanda /> {/* Adicione o componente ao layout */}
+      <ConsultarComanda />
+      <LiberarMesa /> {/* Adicione o componente ao layout */}
     </div>
   );
 }
