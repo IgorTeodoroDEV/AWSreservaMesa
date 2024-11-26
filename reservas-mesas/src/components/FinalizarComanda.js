@@ -13,7 +13,6 @@ const FinalizarComanda = () => {
                 comandaID: comandaID,
             });
             setMessage(response.data.body.message);
-            setTotal(response.data.body.total);
         } catch (error) {
             setMessage('Erro ao finalizar comanda.');
         }
