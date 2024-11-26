@@ -21,7 +21,7 @@ const ConsultaReserva = () => {
     return (
         <div>
             <h2>Consultar mesas</h2>
-            <button onClick={handleConsultaReserva}>Finalizar</button>
+            <button onClick={handleConsultaReserva}>Consultar reservas</button>
             <p>{message}</p>
         </div>
     );
