@@ -4,7 +4,6 @@ import api from '../api';
 
 const FinalizarComanda = () => {
     const [comandaID, setComandaID] = useState('');
-    const [total, setTotal] = useState(null);
     const [message, setMessage] = useState('');
 
     const handleFinalizarComanda = async () => {
@@ -13,8 +12,7 @@ const FinalizarComanda = () => {
                 action: 'finalizarComanda',
                 comandaID: comandaID,
             });
-            setMessage(response.data.body.message);
-            setTotal(response.data.body.total);
+            setMessage(response.data.body);
         } catch (error) {
             setMessage('Erro ao finalizar comanda.');
         }
@@ -30,8 +28,7 @@ const FinalizarComanda = () => {
                 onChange={(e) => setComandaID(e.target.value)}
             />
             <button onClick={handleFinalizarComanda}>Finalizar</button>
-            {message && <p>{message}</p>}
-            {total !== null && <p>Total: R${total}</p>}
+            <p>{message}</p>
         </div>
     );
 };

@@ -1,36 +1,36 @@
-// src/components/MesaReserva.js
+// src/components/Comanda.js
 import React, { useState } from 'react';
 import api from '../api';
 
-const MesaReserva = () => {
+const LiberarMesa = () => {
     const [mesaID, setMesaID] = useState('');
     const [message, setMessage] = useState('');
 
-    const handleReserva = async () => {
+    const handLiberarMesas = async () => {
         try {
-            const response = await api.post('/reservarMesa', {
-                action: 'reservarMesa',
-                mesaID: mesaID,
+            const response = await api.post('/liberarMesa', {
+                action: 'liberarMesa',
+                mesaID: mesaID
             });
             setMessage(response.data.body);
         } catch (error) {
-            setMessage('Erro ao reservar mesa.');
+            setMessage('Erro ao consultar comanda.');
         }
     };
 
     return (
         <div>
-            <h2>Reservar Mesa</h2>
+            <h2>liberar mesa reservada</h2>
             <input
                 type="text"
-                placeholder="ID da mesa"
+                placeholder="Numero da Mesa"
                 value={mesaID}
                 onChange={(e) => setMesaID(e.target.value)}
             />
-            <button onClick={handleReserva}>Reservar</button>
+            <button onClick={handLiberarMesas}>LiberarMesa</button>
             <p>{message}</p>
         </div>
     );
 };
 
-export default MesaReserva;
+export default LiberarMesa;
